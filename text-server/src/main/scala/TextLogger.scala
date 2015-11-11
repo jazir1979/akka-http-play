@@ -19,11 +19,19 @@ trait TextLoggerService extends HttpService {
 
   // TODO: json
   val myRoute: Route =
-    path("") {
+    path("submit") {
       post {
         entity(as[String]) { str =>
-          complete(s"You sent us: ${str}")
+          complete(s"You sent us: $str")
         }
       }
+    } ~ path("") {
+        get {
+          respondWithMediaType(`text/html`) {
+            complete {
+              <html> <body> <h1>Hello!</h1> </body> </html>
+            }
+          }
+        }
     }
 }

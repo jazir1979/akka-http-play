@@ -8,9 +8,15 @@ class TextLoggerSpec extends Specification with Specs2RouteTest with TextLoggerS
 
   "MyService" should {
 
+    "POST back whatever you /submit" in {
+      Post("/submit", "request body") ~> myRoute ~> check {
+        responseAs[String] must contain("request body")
+      }
+    }
+
     "return a greeting for GET requests to the root path" in {
       Get() ~> myRoute ~> check {
-        responseAs[String] must contain("Say hello")
+        responseAs[String] must contain("Hello")
       }
     }
 
