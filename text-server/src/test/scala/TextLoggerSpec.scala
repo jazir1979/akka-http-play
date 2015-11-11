@@ -2,6 +2,7 @@ import org.specs2.mutable.Specification
 import spray.testkit.Specs2RouteTest
 import spray.http._
 import StatusCodes._
+import MediaTypes._
 
 class TextLoggerSpec extends Specification with Specs2RouteTest with TextLoggerService {
   def actorRefFactory = system
@@ -9,8 +10,8 @@ class TextLoggerSpec extends Specification with Specs2RouteTest with TextLoggerS
   "MyService" should {
 
     "POST back whatever you /submit" in {
-      Post("/submit", "request body") ~> myRoute ~> check {
-        responseAs[String] must contain("request body")
+      Post("/submit", HttpEntity(`application/json`, "{ \"message\" : \"notification text\" }")) ~> myRoute ~> check {
+        responseAs[String] must contain("notification text")
       }
     }
 
